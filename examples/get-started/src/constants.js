@@ -18,13 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 import {CarMesh} from 'streetscape.gl';
+// import {load} from '@loaders.gl/core';
+// import {OBJLoader} from '@loaders.gl/obj';
 
 /* eslint-disable camelcase */
 export const MAPBOX_TOKEN =
   'pk.eyJ1Ijoiam9uLXRyaSIsImEiOiJjanhnbzVmdGgwNDBqM3lxeTc0eDZ6eXRkIn0.I-8tKdRx8Qw2LiqO_rpA_g'; // eslint-disable-line
 
 // export const MAP_STYLE = 'mapbox://styles/mapbox/satellite-streets-v9';
-export const MAP_STYLE = 'mapbox://styles/mapbox/streets-v11';
+// export const MAP_STYLE = 'mapbox://styles/mapbox/streets-v11';
+export const MAP_STYLE = 'mapbox://styles/mapbox/dark-v9';
 
 export const XVIZ_CONFIG = {
   PLAYBACK_FRAME_RATE: 10
@@ -37,6 +40,13 @@ export const CAR = CarMesh.sedan({
   height: 1.5,
   color: [160, 160, 160]
 });
+// export const CAR = {
+//   mesh: load('./assets/car.obj', OBJLoader),
+//   origin: [1.08, -0.32, 0],
+//   scale: 0.0009,
+//   wireframe: true,
+//   color: [160, 160, 160]
+// };
 
 export const APP_SETTINGS = {
   viewMode: {

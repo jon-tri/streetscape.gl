@@ -113,7 +113,7 @@ document.body.appendChild(root);
 
 render(
   <ThemeProvider theme={UI_THEME}>
-    <Example />
+    <Example />,
   </ThemeProvider>,
   root
 );
