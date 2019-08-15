@@ -32,6 +32,8 @@ const METER_WIDGET_STYLE = {
     fontSize: 14
   }
 };
+
+/* eslint-disable camelcase */
 const AUTONOMY_STATE = {
   Autonomous: '#4775b2',
   Manual: '#b5b5b5',
