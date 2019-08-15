@@ -78,6 +78,18 @@ const CONFIG = {
 
 module.exports = (env = {}) => {
   let config = Object.assign({}, CONFIG);
+  // dev
+  Object.assign(config, {
+    mode: 'development',
+    devServer: {
+      contentBase: [
+        resolve(__dirname, '../../website/src/static'),
+        resolve(__dirname, '../../../xviz-data'),
+        resolve(__dirname)
+      ]
+    },
+    devtool: 'source-map'
+  });
 
   // This switch between streaming and static file loading
   config.plugins = config.plugins.concat([

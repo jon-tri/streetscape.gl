@@ -48,7 +48,7 @@ export const CAR = CarMesh.sedan({
 //   color: [160, 160, 160]
 // };
 
-export const APP_SETTINGS = {
+export const SETTINGS = {
   viewMode: {
     type: 'select',
     title: 'View Mode',

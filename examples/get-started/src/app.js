@@ -42,7 +42,7 @@ import {
 } from 'streetscape.gl';
 import {Form, ThemeProvider} from '@streetscape.gl/monochrome';
 
-import {XVIZ_CONFIG, APP_SETTINGS, MAPBOX_TOKEN, MAP_STYLE, XVIZ_STYLE, CAR} from './constants';
+import {XVIZ_CONFIG, SETTINGS, MAPBOX_TOKEN, MAP_STYLE, XVIZ_STYLE, CAR} from './constants';
 import {UI_THEME} from './custom-styles';
 
 import './stylesheets/main.scss';
@@ -58,15 +58,6 @@ const exampleLog = require(__IS_STREAMING__
     ? './log-from-live'
     : './log-from-file').default;
 
-const AUTONOMY_STATE = {
-  Autonomous: '#4775b2',
-  Manual: '#b5b5b5',
-  Ready: '#23fc40',
-  HardHandback: '#fc2323',
-  StartingAutonomy: '#6ba4ff',
-  unknown: '#b5b5b5'
-};
-
 class Example extends PureComponent {
   state = {
     log: exampleLog,
@@ -78,15 +69,6 @@ class Example extends PureComponent {
 
   componentDidMount() {
     this.state.log.on('error', console.error).connect();
-  }
-
-  _renderAutonomyState({streams}) {
-    const state = (streams.state.data && streams.state.data.variable) || 'unknown';
-    return (
-      <div className="autonomy-state" style={{background: AUTONOMY_STATE[state]}}>
-        {state}
-      </div>
-    );
   }
 
   _onSettingsChange = changedSettings => {
