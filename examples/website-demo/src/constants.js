@@ -22,7 +22,9 @@ import {load} from '@loaders.gl/core';
 import {OBJLoader} from '@loaders.gl/obj';
 
 /* eslint-disable camelcase */
-export const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+// export const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+export const MAPBOX_TOKEN =
+  'pk.eyJ1Ijoiam9uLXRyaSIsImEiOiJjanhnbzVmdGgwNDBqM3lxeTc0eDZ6eXRkIn0.I-8tKdRx8Qw2LiqO_rpA_g'; // eslint-disable-line
 
 export const MAP_STYLE = 'mapbox://styles/uberdata/cjfxhlikmaj1b2soyzevnywgs';
 

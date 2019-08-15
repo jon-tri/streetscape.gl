@@ -24,6 +24,11 @@ import React, {PureComponent} from 'react';
 import {render} from 'react-dom';
 
 import {setXVIZConfig, getXVIZConfig} from '@xviz/parser';
+import ControlPanel from './control-panel';
+import MapView from './map-view';
+import Timeline from './timeline';
+import Toolbar from './toolbar';
+import HUD from './hud';
 import {
   _BaseWidget as BaseWidget,
   LogViewer,
@@ -37,10 +42,10 @@ import {
 } from 'streetscape.gl';
 import {Form, ThemeProvider} from '@streetscape.gl/monochrome';
 
-import {XVIZ_CONFIG, APP_SETTINGS, MAPBOX_TOKEN, MAP_STYLE, XVIZ_STYLE, CAR} from './constants';
-// import {UI_THEME} from './custom-styles';
+import {XVIZ_CONFIG, SETTINGS, MAPBOX_TOKEN, MAP_STYLE, XVIZ_STYLE, CAR} from './constants';
+import {UI_THEME} from './custom-styles';
 
-// import './stylesheets/main.scss';
+import './stylesheets/main.scss';
 
 setXVIZConfig(XVIZ_CONFIG);
 
@@ -95,65 +100,26 @@ class Example extends PureComponent {
 
     return (
       <div id="container">
-        <div id="control-panel">
-          <XVIZPanel log={log} name="Metrics" />
-          <hr />
-          <XVIZPanel log={log} name="Camera" />
-          <hr />
-          <Form
-            data={APP_SETTINGS}
-            values={this.state.settings}
-            onChange={this._onSettingsChange}
-          />
-          <StreamSettingsPanel log={log} />
-        </div>
-        <div id="log-panel">
-          <div id="map-view">
-            <LogViewer
-              log={log}
-              mapboxApiAccessToken={MAPBOX_TOKEN}
-              mapStyle={MAP_STYLE}
-              car={CAR}
-              xvizStyles={XVIZ_STYLE}
-              showTooltip={settings.showTooltip}
-              viewMode={VIEW_MODE[settings.viewMode]}
-            />
-            <div id="hud">
-              <TurnSignalWidget log={log} streamName="/vehicle/turn_signal" />
-              <hr />
-              <TrafficLightWidget log={log} streamName="/vehicle/traffic_light" />
-              <hr />
-              <MeterWidget
-                log={log}
-                streamName="/vehicle/acceleration"
-                label="Acceleration"
-                min={-4}
-                max={4}
-              />
-              <hr />
-              <MeterWidget
-                log={log}
-                streamName="/vehicle/velocity"
-                label="Speed"
-                min={0}
-                max={20}
-              />
-              <BaseWidget log={log} streamNames={{state: '/vehicle/autonomy_state'}}>
-                {this._renderAutonomyState}
-              </BaseWidget>
-            </div>
-          </div>
-          <div id="timeline">
-            <PlaybackControl
-              width="100%"
-              log={log}
-              formatTimestamp={x => new Date(x * TIMEFORMAT_SCALE).toUTCString()}
-            />
-          </div>
-        </div>
+        <MapView log={log} settings={settings} onSettingsChange={this._onSettingsChange} />
+
+        <ControlPanel selectedLog={log} onLogChange={this._onLogChange} log={log} />
+
+        <HUD log={log} />
+
+        <Timeline log={log} />
+
+        <Toolbar settings={settings} onSettingsChange={this._onSettingsChange} />
       </div>
     );
   }
 }
 
-render(<Example />, document.getElementById('app'));
+const root = document.createElement('div');
+document.body.appendChild(root);
+
+render(
+  <ThemeProvider theme={UI_THEME}>
+    <Example />
+  </ThemeProvider>,
+  root
+);

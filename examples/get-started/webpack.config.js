@@ -52,10 +52,21 @@ const CONFIG = {
         ]
       },
       {
-        // Unfortunately, webpack doesn't import library sourcemaps on its own...
-        test: /\.js$/,
-        use: ['source-map-loader'],
-        enforce: 'pre'
+        test: /\.s?css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: ['./node_modules', '.']
+            }
+          }
+        ]
       }
     ]
   },
@@ -67,12 +78,31 @@ const CONFIG = {
 
 module.exports = (env = {}) => {
   let config = Object.assign({}, CONFIG);
+  // dev
+  Object.assign(config, {
+    mode: 'development',
+    devServer: {
+      contentBase: [
+        resolve(__dirname, '../../website/src/static'),
+        resolve(__dirname, '../../../xviz-data'),
+        resolve(__dirname)
+      ]
+    },
+    devtool: 'source-map'
+  });
 
   // This switch between streaming and static file loading
   config.plugins = config.plugins.concat([
     new webpack.DefinePlugin({__IS_STREAMING__: JSON.stringify(Boolean(env.stream))}),
     new webpack.DefinePlugin({__IS_LIVE__: JSON.stringify(Boolean(env.live))})
   ]);
+
+  config.module.rules = config.module.rules.concat({
+    // Unfortunately, webpack doesn't import library sourcemaps on its own...
+    test: /\.js$/,
+    use: ['source-map-loader'],
+    enforce: 'pre'
+  });
 
   if (env.local) {
     // This line enables bundling against src in this repo rather than installed module
