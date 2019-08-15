@@ -58,6 +58,15 @@ const exampleLog = require(__IS_STREAMING__
     ? './log-from-live'
     : './log-from-file').default;
 
+const AUTONOMY_STATE = {
+  Autonomous: '#4775b2',
+  Manual: '#b5b5b5',
+  Ready: '#23fc40',
+  HardHandback: '#fc2323',
+  StartingAutonomy: '#6ba4ff',
+  unknown: '#b5b5b5'
+};
+
 class Example extends PureComponent {
   state = {
     log: exampleLog,
@@ -69,6 +78,15 @@ class Example extends PureComponent {
 
   componentDidMount() {
     this.state.log.on('error', console.error).connect();
+  }
+
+  _renderAutonomyState({streams}) {
+    const state = (streams.state.data && streams.state.data.variable) || 'unknown';
+    return (
+      <div className="autonomy-state" style={{background: AUTONOMY_STATE[state]}}>
+        {state}
+      </div>
+    );
   }
 
   _onSettingsChange = changedSettings => {
